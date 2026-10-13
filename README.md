@@ -1,65 +1,81 @@
 # serotask-angular-loader
 
-Workspace for **[@serotask/angular-loader](projects/angular-loader/README.md)**, a lightweight, accessible Angular loader
-(20 animations, HTTP interceptor, manual control, global config).
+A lightweight, accessible Angular loader library with **20 animations**, an HTTP interceptor, manual control, and global configuration.
 
-```
+**[Live Demo](https://serotask.github.io/serotask-angular-loader/)** · **[Library documentation](projects/angular-loader/README.md)**
+
+The workspace includes the library source and a demo app so you can try the loader locally or in your browser.
+
+## Project structure
+
+```text
 projects/
-  angular-loader/   the npm library (source, tests, README, CHANGELOG)
-  demo/             demo app to try every feature
-.github/workflows/  CI (test + build) and tag-based npm release
+  angular-loader/   Angular loader library (source, tests, README, CHANGELOG)
+  demo/             Demo app to try the loader features
+.github/workflows/
+  ci.yml            CI (tests and builds)
+  deploy-demo.yml   Deploys the demo to GitHub Pages
 ```
 
-## Quick start
+## Requirements
 
-Requires Node 20.19+ / 22.12+ and npm.
+- Node.js **20.19+** or **22.12+**
+- npm
+
+## Try the live demo
+
+Open the **[SeroTask Angular Loader demo](https://serotask.github.io/serotask-angular-loader/)** to explore the loader in your browser without installing anything.
+
+If the link is not available yet, check the repository's **Actions** tab for the `Deploy Angular Demo to GitHub Pages` workflow. After its first successful run, go to **Settings → Pages** and make sure the build and deployment source is set to **GitHub Actions**.
+
+## Run the demo locally
+
+Clone the repository and install its dependencies:
 
 ```bash
+git clone https://github.com/SeroTask/serotask-angular-loader.git
+cd serotask-angular-loader
 npm install
-npm start          # demo app on http://localhost:4200
-npm test           # library unit tests (Vitest)
-npm run build:lib  # builds the library into dist/angular-loader
-npm run build:demo # production build of the demo app
-npm run pack:check # shows what would be published (after build:lib)
+npm start
 ```
 
-The demo imports the library straight from source (see `paths` in `tsconfig.json`),
-so `npm start` works without building the library first.
+Open **http://localhost:4200** in your browser.
 
-## Try the built package in another app
+The demo imports the library directly from source, so you don't need to build the library before starting the demo.
+
+## Development commands
+
+Run these commands from the repository root:
+
+```bash
+npm test            # Run library unit tests (Vitest)
+npm run build:lib   # Build the library into dist/angular-loader
+npm run build:demo  # Build the demo app for production
+npm run pack:check  # Check package contents (run build:lib first)
+```
+
+## Use the library in another Angular app
+
+Build and pack the library:
 
 ```bash
 npm run build:lib
-cd dist/angular-loader && npm pack      # creates serotask-angular-loader-1.0.0.tgz
-# in your other Angular project:
+cd dist/angular-loader
+npm pack
+```
+
+This creates a `.tgz` package file. In your other Angular project, install it using the path to that file:
+
+```bash
 npm install /path/to/serotask-angular-loader-1.0.0.tgz
 ```
 
-## Publish to npm
-
-1. Own the `@serotask` npm scope (create an npm organization named `serotask`).
-2. Update `version` in `projects/angular-loader/package.json` and add an entry to `projects/angular-loader/CHANGELOG.md`.
-3. Publish:
-   ```bash
-   npm login
-   npm run publish:lib
-   ```
-   or push a tag (`git tag v1.0.0 && git push --tags`) and let `.github/workflows/release.yml` publish
-   (needs the repository secret `NPM_TOKEN`).
-
-## Push to GitHub
-
-```bash
-git init
-git add .
-git commit -m "Initial commit"
-git branch -M main
-git remote add origin https://github.com/<your-user>/<your-repo>.git
-git push -u origin main
-```
-
-After the first `npm install`, commit `package-lock.json` too.
+For installation and usage instructions, see the [Angular loader library README](projects/angular-loader/README.md).
 
 ## License
 
-MIT. Based on `@kudoengineer/loader` by Satendra Rajput (MIT). See [LICENSE](LICENSE).
+MIT. See [LICENSE](LICENSE).
+
+## Author
+
+[Satendra Rajput](https://satendra2rajput.com/)
