@@ -1,85 +1,203 @@
 <st-loader />
 
 <main class="page">
-  <header>
-    <h1>&#64;serotask/angular-loader</h1>
-    <p>
-      Demo &amp; manual test page &nbsp;|&nbsp; loader visible: <strong>{{ loader.visible() }}</strong> &nbsp;|&nbsp;
-      running requests: <strong>{{ loader.requestCount() }}</strong>
+  <header class="page-header">
+    <p class="eyebrow">SEROTASK DEVELOPER TOOLS</p>
+    <h1>@serotask/angular-loader</h1>
+    <p class="subtitle">
+      An interactive Angular loader demo and manual testing playground.
     </p>
+
+    <div class="status-bar">
+      <span>
+        Loader:
+        <strong>{{ loader.visible() ? 'Visible' : 'Hidden' }}</strong>
+      </span>
+      <span>
+        Running requests:
+        <strong>{{ loader.requestCount() }}</strong>
+      </span>
+    </div>
   </header>
 
   <section class="card">
-    <h2>1. Loader types (click to preview)</h2>
+    <div class="section-heading">
+      <span class="section-number">01</span>
+      <div>
+        <h2>Loader types</h2>
+        <p>Choose a loader to preview its animation.</p>
+      </div>
+    </div>
+
     <div class="grid">
       @for (t of types; track t) {
-        <button type="button" [class.active]="options().type === t" (click)="preview(t)">{{ t }}</button>
+      <button type="button" [class.active]="options().type === t" (click)="preview(t)">
+        {{ t }}
+      </button>
       }
     </div>
   </section>
 
   <section class="card">
-    <h2>2. Options (used by the previews above)</h2>
+    <div class="section-heading">
+      <span class="section-number">02</span>
+      <div>
+        <h2>Customize loader</h2>
+        <p>Adjust the settings and preview your configuration.</p>
+      </div>
+    </div>
+
     <div class="form">
-      <label>Color <input type="color" [value]="options().color" (input)="patch({ color: value($event) })" /></label>
-      <label>Text <input type="text" [value]="options().text" (input)="patch({ text: value($event) })" /></label>
+      <label>
+        Loader color
+        <input type="color" [value]="options().color" (input)="patch({ color: value($event) })" />
+      </label>
+
+      <label>
+        Loading text
+        <input type="text" [value]="options().text" (input)="patch({ text: value($event) })" placeholder="Loading..." />
+      </label>
+
       <label>
         Size
-        <select (change)="patch({ size: asSize(value($event)) })">
+        <select [value]="options().size" (change)="patch({ size: asSize(value($event)) })">
           @for (s of sizes; track s) {
-            <option [value]="s" [selected]="options().size === s">{{ s }}</option>
+          <option [value]="s">{{ s }}</option>
           }
         </select>
       </label>
+
       <label>
         Position
-        <select (change)="patch({ position: asPosition(value($event)) })">
+        <select [value]="options().position" (change)="patch({ position: asPosition(value($event)) })">
           @for (p of positions; track p) {
-            <option [value]="p" [selected]="options().position === p">{{ p }}</option>
+          <option [value]="p">{{ p }}</option>
           }
         </select>
       </label>
+
       <label>
-        Overlay opacity
+        Overlay opacity: {{ options().overlayOpacity }}
         <input type="range" min="0" max="0.8" step="0.05" [value]="options().overlayOpacity"
           (input)="patch({ overlayOpacity: +value($event) })" />
       </label>
+
       <label>
-        Auto-hide (ms)
+        Auto-hide duration (ms)
         <input type="number" min="0" step="500" [value]="options().duration"
           (input)="patch({ duration: +value($event) })" />
       </label>
-      <label class="check"><input type="checkbox" [checked]="options().overlay" (change)="patch({ overlay: checked($event) })" /> Overlay</label>
-      <label class="check"><input type="checkbox" [checked]="options().showContainer" (change)="patch({ showContainer: checked($event) })" /> Container card</label>
-      <label class="check"><input type="checkbox" [checked]="options().showCloseButton" (change)="patch({ showCloseButton: checked($event) })" /> Close button</label>
-      <label class="check"><input type="checkbox" [checked]="options().fullscreen" (change)="patch({ fullscreen: checked($event) })" /> Fullscreen</label>
+
+      <label class="check">
+        <input type="checkbox" [checked]="options().overlay" (change)="patch({ overlay: checked($event) })" />
+        Show overlay
+      </label>
+
+      <label class="check">
+        <input type="checkbox" [checked]="options().showContainer"
+          (change)="patch({ showContainer: checked($event) })" />
+        Show container
+      </label>
+
+      <label class="check">
+        <input type="checkbox" [checked]="options().showCloseButton"
+          (change)="patch({ showCloseButton: checked($event) })" />
+        Show close button
+      </label>
+
+      <label class="check">
+        <input type="checkbox" [checked]="options().fullscreen" (change)="patch({ fullscreen: checked($event) })" />
+        Fullscreen
+      </label>
     </div>
+
     <div class="row">
-      <button type="button" class="primary" (click)="preview()">Show loader with these options</button>
-      <button type="button" (click)="resetLoader()">reset()</button>
+      <button type="button" class="primary" (click)="preview()">
+        Preview loader
+      </button>
+
+      <button type="button" (click)="resetLoader()">
+        Reset loader
+      </button>
     </div>
   </section>
 
   <section class="card">
-    <h2>3. HTTP interceptor (needs internet)</h2>
-    <p class="hint">Responses are slowed by 1.2s in this demo so the loader is visible. Global config: delay 150ms, minDuration 300ms.</p>
+    <div class="section-heading">
+      <span class="section-number">03</span>
+      <div>
+        <h2>HTTP interceptor</h2>
+        <p>Test automatic loader behavior during HTTP requests.</p>
+      </div>
+    </div>
+
+    <p class="hint">
+      These examples use JSONPlaceholder and require an internet connection.
+      Requests are configured by your application's HTTP interceptor.
+    </p>
+
     <div class="row">
-      <button type="button" (click)="singleRequest()">Single request</button>
-      <button type="button" (click)="parallelRequests()">3 parallel requests</button>
-      <button type="button" (click)="skipLoader()">SKIP_LOADER</button>
-      <button type="button" (click)="customText()">LOADER_OPTIONS (custom text)</button>
-      <button type="button" (click)="trackObservable()">track(timer(2000))</button>
+      <button type="button" (click)="singleRequest()">
+        Single request
+      </button>
+
+      <button type="button" (click)="parallelRequests()">
+        3 parallel requests
+      </button>
+
+      <button type="button" (click)="skipLoader()">
+        Skip loader
+      </button>
+
+      <button type="button" (click)="customText()">
+        Custom loader text
+      </button>
+
+      <button type="button" (click)="trackObservable()">
+        Track observable
+      </button>
     </div>
   </section>
 
   <section class="card">
-    <h2>Log</h2>
+    <div class="section-heading">
+      <span class="section-number">04</span>
+      <div>
+        <h2>Activity log</h2>
+        <p>Recent actions and request results appear here.</p>
+      </div>
+    </div>
+
     <ul class="log">
       @for (line of log(); track $index) {
-        <li>{{ line }}</li>
+      <li>{{ line }}</li>
       } @empty {
-        <li class="hint">Abhi koi action nahi.</li>
+      <li class="empty-log">
+        No activity yet. Try one of the demo actions above.
+      </li>
       }
     </ul>
   </section>
+
+  <footer class="site-footer">
+    <p class="footer-brand">
+      Part of
+      <a href="https://github.com/serotask" target="_blank" rel="noopener noreferrer">SeroTask</a>
+    </p>
+
+    <nav class="footer-links" aria-label="Project links">
+      <a href="https://github.com/serotask/serotask-angular-loader" target="_blank" rel="noopener noreferrer">GitHub
+        Repository</a>
+
+      <span aria-hidden="true">·</span>
+
+      <a href="https://www.npmjs.com/package/@serotask/angular-loader" target="_blank" rel="noopener noreferrer">npm
+        Package</a>
+    </nav>
+
+    <p class="footer-author">
+      Created and maintained by
+      <a href="https://satendra2rajput.com/" target="_blank" rel="noopener noreferrer">Satendra Rajput</a>
+    </p>
+  </footer>
 </main>

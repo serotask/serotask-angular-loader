@@ -1,20 +1,39 @@
 # @serotask/angular-loader
 
-Lightweight, accessible loading indicator for Angular. Includes standalone components, Signals, pure CSS animations, and zero runtime dependencies.
+A lightweight, accessible loading indicator for Angular with 20 built-in
+animations, an HTTP interceptor, manual controls, and global
+configuration.
+
+[![npm
+version](https://img.shields.io/npm/v/@serotask/angular-loader)](https://www.npmjs.com/package/@serotask/angular-loader)
+[![License:
+MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
+**Live Demo:** [Try the Angular
+Loader](https://serotask.github.io/serotask-angular-loader/)\
+**GitHub Repository:**
+[serotask/serotask-angular-loader](https://github.com/serotask/serotask-angular-loader)\
+**Author:** [Satendra Rajput](https://satendra2rajput.com/)
 
 ## Features
 
 - 20 built-in animations
 - HTTP interceptor with parallel-request counting
-- Manual `show()` / `hide()` control that works alongside the interceptor
+- Manual `show()` / `hide()` control that works alongside the
+  interceptor
 - Global configuration with `provideLoader()`
 - Flicker-free loading with `delay` and `minDuration`
 - Per-request skip and custom text through `HttpContext`
-- Configurable `size`, `position`, `fullscreen`, `overlay`, `showCloseButton`, and `duration`
+- Configurable `size`, `position`, `fullscreen`, `overlay`,
+  `showCloseButton`, and `duration`
 - Accessible status announcements and reduced-motion support
 - SSR-safe
+- Zero runtime dependencies
 
-**Requirements:** Angular 20+ and RxJS 7.
+## Requirements
+
+- Angular 20+
+- RxJS 7
 
 ## Install
 
@@ -44,7 +63,7 @@ export const appConfig: ApplicationConfig = {
 };
 ```
 
-### `app.ts`
+### Root component
 
 Add `<st-loader />` once in your root component.
 
@@ -64,7 +83,8 @@ import { StLoader } from "@serotask/angular-loader";
 export class App {}
 ```
 
-With the interceptor configured, tracked HTTP requests show the loader automatically.
+With the interceptor configured, tracked HTTP requests show the loader
+automatically.
 
 ## Manual control
 
@@ -73,7 +93,7 @@ import { Component, inject } from "@angular/core";
 import { LoaderService } from "@serotask/angular-loader";
 
 @Component({
-  /* ... */
+  // ...
 })
 export class Example {
   private readonly loader = inject(LoaderService);
@@ -96,7 +116,8 @@ this.loader.track(this.service.heavyCall(), "Processing...").subscribe();
 
 ### How manual and HTTP loading combine
 
-The loader stays visible while either a manual `show()` is active or at least one tracked HTTP request is running.
+The loader stays visible while either a manual `show()` is active or at
+least one tracked HTTP request is running.
 
 - `hide()` ends the manual part.
 - `reset()` force-hides the loader and restores defaults.
@@ -130,41 +151,100 @@ this.http.post("/api/upload", file, {
 
 ## Options
 
-Set defaults with `provideLoader({...})`, then override them per call with `show({...})`.
+Set defaults with `provideLoader({...})`, then override them per call
+with `show({...})`.
 
-| Option            | Type                       | Default      | Description                                             |
-| ----------------- | -------------------------- | ------------ | ------------------------------------------------------- |
-| `type`            | `LoaderType`               | `spinner`    | Animation type                                          |
-| `size`            | `small \| medium \| large` | `medium`     | Animation size                                          |
-| `text`            | `string`                   | `Loading...` | Text beneath the loader; `''` hides it                  |
-| `fullscreen`      | `boolean`                  | `true`       | `false` confines it to the nearest positioned parent    |
-| `overlay`         | `boolean`                  | `true`       | Dim the background and block clicks                     |
-| `overlayOpacity`  | `number`                   | `0.2`        | Overlay darkness from 0 to 1                            |
-| `showContainer`   | `boolean`                  | `false`      | Show a card behind the loader                           |
-| `position`        | `center \| top \| bottom`  | `center`     | Vertical position                                       |
-| `showCloseButton` | `boolean`                  | `false`      | Show a close button that force-hides the loader         |
-| `color`           | `string`                   | `#2563eb`    | Any CSS color or `var(--x)`                             |
-| `duration`        | `number` (ms)              | `0`          | Auto-hide a manual `show()`; `0` means never            |
-| `delay`           | `number` (ms)              | `0`          | Wait before showing, avoiding flashes for fast requests |
-| `minDuration`     | `number` (ms)              | `0`          | Minimum visible time to reduce flicker                  |
+---
+
+Option Type Default Description
+
+---
+
+`type` `LoaderType` `spinner` Animation type
+
+`size` `small \| medium \| large` `medium` Animation size
+
+`text` `string` `Loading...` Text beneath the
+loader; `''`
+hides it
+
+`fullscreen` `boolean` `true` `false` confines
+it to the nearest
+positioned parent
+
+`overlay` `boolean` `true` Dim the
+background and
+block clicks
+
+`overlayOpacity` `number` `0.2` Overlay darkness
+from 0 to 1
+
+`showContainer` `boolean` `false` Show a card
+behind the loader
+
+`position` `center \| top \| bottom` `center` Vertical position
+
+`showCloseButton` `boolean` `false` Show a close
+button that
+force-hides the
+loader
+
+`color` `string` `#2563eb` Any CSS color or
+`var(--x)`
+
+`duration` `number` (ms) `0` Auto-hide a
+manual `show()`;
+`0` means never
+
+`delay` `number` (ms) `0` Wait before
+showing, avoiding
+flashes for fast
+requests
+
+`minDuration` `number` (ms) `0` Minimum visible
+time to reduce
+flicker
+
+---
 
 Recommended for most apps: `delay: 150` and `minDuration: 300`.
 
 ## Loader types
 
-`spinner`, `dots`, `bars`, `pulse`, `ring`, `dual-ring`, `ripple`, `orbit`, `bounce`, `wave`, `snake`, `square`, `cube`, `dots-wave`, `progress`, `gradient-ring`, `ellipsis`, `heartbeat`, `stretch`, `solar`.
+`spinner`, `dots`, `bars`, `pulse`, `ring`, `dual-ring`, `ripple`,
+`orbit`, `bounce`, `wave`, `snake`, `square`, `cube`, `dots-wave`,
+`progress`, `gradient-ring`, `ellipsis`, `heartbeat`, `stretch`, and
+`solar`.
 
 ## `LoaderService` API
 
-| Member                                         | Description                                   |
-| ---------------------------------------------- | --------------------------------------------- |
-| `show(options?)` / `hide()` / `toggle()`       | Manual control                                |
-| `startRequest()` / `endRequest()`              | Track requests (used by the interceptor)      |
-| `track(observable, options?)`                  | Show the loader while an observable is active |
-| `reset()`                                      | Force-hide and restore defaults               |
-| `setType`, `setSize`, `setText`, `setPosition` | Change the visible loader live                |
-| `visible`, `options`, `requestCount`           | Read-only signals                             |
-| `isLoading()`                                  | Returns `true` while the loader is visible    |
+---
+
+Member Description
+
+---
+
+`show(options?)` / `hide()` / Manual control
+`toggle()`
+
+`startRequest()` / `endRequest()` Track requests (used by the
+interceptor)
+
+`track(observable, options?)` Show the loader while an observable
+is active
+
+`reset()` Force-hide and restore defaults
+
+`setType`, `setSize`, `setText`, Change the visible loader live
+`setPosition`
+
+`visible`, `options`, Read-only signals
+`requestCount`
+
+`isLoading()` Returns `true` while the loader is
+visible
+
+---
 
 ## Theming
 
@@ -179,9 +259,13 @@ The loader color can also be configured with the `color` option.
 
 ## Accessibility and SSR
 
-The loader uses `role="status"`, `aria-live="polite"`, and `aria-busy`, with the status labelled by its text. Animations respect `prefers-reduced-motion`. No timers run on the server.
+The loader uses `role="status"`, `aria-live="polite"`, and `aria-busy`,
+with the status labelled by its text. Animations respect
+`prefers-reduced-motion`. No timers run on the server.
 
-MIT. See `LICENSE` for the license terms and copyright notices.
+## License
+
+MIT. See [LICENSE](LICENSE) for the license terms and copyright notices.
 
 ## Author
 
