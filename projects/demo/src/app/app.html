@@ -1,0 +1,85 @@
+<st-loader />
+
+<main class="page">
+  <header>
+    <h1>&#64;serotask/angular-loader</h1>
+    <p>
+      Demo &amp; manual test page &nbsp;|&nbsp; loader visible: <strong>{{ loader.visible() }}</strong> &nbsp;|&nbsp;
+      running requests: <strong>{{ loader.requestCount() }}</strong>
+    </p>
+  </header>
+
+  <section class="card">
+    <h2>1. Loader types (click to preview)</h2>
+    <div class="grid">
+      @for (t of types; track t) {
+        <button type="button" [class.active]="options().type === t" (click)="preview(t)">{{ t }}</button>
+      }
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>2. Options (used by the previews above)</h2>
+    <div class="form">
+      <label>Color <input type="color" [value]="options().color" (input)="patch({ color: value($event) })" /></label>
+      <label>Text <input type="text" [value]="options().text" (input)="patch({ text: value($event) })" /></label>
+      <label>
+        Size
+        <select (change)="patch({ size: asSize(value($event)) })">
+          @for (s of sizes; track s) {
+            <option [value]="s" [selected]="options().size === s">{{ s }}</option>
+          }
+        </select>
+      </label>
+      <label>
+        Position
+        <select (change)="patch({ position: asPosition(value($event)) })">
+          @for (p of positions; track p) {
+            <option [value]="p" [selected]="options().position === p">{{ p }}</option>
+          }
+        </select>
+      </label>
+      <label>
+        Overlay opacity
+        <input type="range" min="0" max="0.8" step="0.05" [value]="options().overlayOpacity"
+          (input)="patch({ overlayOpacity: +value($event) })" />
+      </label>
+      <label>
+        Auto-hide (ms)
+        <input type="number" min="0" step="500" [value]="options().duration"
+          (input)="patch({ duration: +value($event) })" />
+      </label>
+      <label class="check"><input type="checkbox" [checked]="options().overlay" (change)="patch({ overlay: checked($event) })" /> Overlay</label>
+      <label class="check"><input type="checkbox" [checked]="options().showContainer" (change)="patch({ showContainer: checked($event) })" /> Container card</label>
+      <label class="check"><input type="checkbox" [checked]="options().showCloseButton" (change)="patch({ showCloseButton: checked($event) })" /> Close button</label>
+      <label class="check"><input type="checkbox" [checked]="options().fullscreen" (change)="patch({ fullscreen: checked($event) })" /> Fullscreen</label>
+    </div>
+    <div class="row">
+      <button type="button" class="primary" (click)="preview()">Show loader with these options</button>
+      <button type="button" (click)="resetLoader()">reset()</button>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>3. HTTP interceptor (needs internet)</h2>
+    <p class="hint">Responses are slowed by 1.2s in this demo so the loader is visible. Global config: delay 150ms, minDuration 300ms.</p>
+    <div class="row">
+      <button type="button" (click)="singleRequest()">Single request</button>
+      <button type="button" (click)="parallelRequests()">3 parallel requests</button>
+      <button type="button" (click)="skipLoader()">SKIP_LOADER</button>
+      <button type="button" (click)="customText()">LOADER_OPTIONS (custom text)</button>
+      <button type="button" (click)="trackObservable()">track(timer(2000))</button>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Log</h2>
+    <ul class="log">
+      @for (line of log(); track $index) {
+        <li>{{ line }}</li>
+      } @empty {
+        <li class="hint">Abhi koi action nahi.</li>
+      }
+    </ul>
+  </section>
+</main>

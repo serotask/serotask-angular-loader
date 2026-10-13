@@ -1,0 +1,35 @@
+{
+  "name": "serotask-angular-loader-workspace",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Workspace for @serotask/angular-loader (library + demo app).",
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve demo --open",
+    "build": "ng build angular-loader",
+    "build:lib": "ng build angular-loader",
+    "build:demo": "ng build demo",
+    "test": "ng test angular-loader --no-watch",
+    "test:watch": "ng test angular-loader",
+    "test:ci": "ng test angular-loader --no-watch",
+    "pack:check": "npm pack ./dist/angular-loader --dry-run",
+    "publish:lib": "npm run test:ci && npm run build:lib && npm publish ./dist/angular-loader --access public"
+  },
+  "dependencies": {
+    "@angular/common": "^21.0.0",
+    "@angular/compiler": "^21.0.0",
+    "@angular/core": "^21.0.0",
+    "@angular/platform-browser": "^21.0.0",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.3.0"
+  },
+  "devDependencies": {
+    "@angular/build": "^21.0.0",
+    "@angular/cli": "^21.0.0",
+    "@angular/compiler-cli": "^21.0.0",
+    "jsdom": "^27.1.0",
+    "ng-packagr": "^21.0.0",
+    "typescript": "~5.9.2",
+    "vitest": "^4.0.8"
+  }
+}

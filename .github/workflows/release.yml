@@ -1,0 +1,30 @@
+# One-time setup: create an npm "Automation" token and save it as the repository secret NPM_TOKEN.
+#
+# Release flow:
+#   1. bump "version" in projects/angular-loader/package.json and add a CHANGELOG entry
+#   2. commit, then:  git tag v1.0.1 && git push origin main --tags
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: read
+  id-token: write # npm provenance
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: https://registry.npmjs.org
+      - run: npm install
+      - run: npm run test:ci
+      - run: npm run build:lib
+      - run: npm publish ./dist/angular-loader --access public --provenance
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

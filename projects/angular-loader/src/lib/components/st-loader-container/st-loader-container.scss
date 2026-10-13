@@ -1,0 +1,954 @@
+:host {
+  --st-loader-color: #2563eb;
+  --st-loader-overlay-opacity: 0.2;
+}
+
+/* =========================================================
+   BASE LOADER
+========================================================= */
+
+.st-loader {
+  position: fixed;
+  inset: 0;
+
+  z-index: 999999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  pointer-events: all;
+
+  background: transparent;
+
+  &--overlay {
+    background: rgba(0, 0, 0, var(--st-loader-overlay-opacity, 0.2));
+
+    backdrop-filter: blur(1px);
+  }
+
+  /* fullscreen: false -> fill the nearest positioned parent */
+  &--inline {
+    position: absolute;
+    z-index: 10;
+  }
+
+  &--top {
+    align-items: flex-start;
+    padding-top: 10vh;
+  }
+
+  &--bottom {
+    align-items: flex-end;
+    padding-bottom: 10vh;
+  }
+
+  /* size: scales the animation only, not the text */
+  &--small {
+    --st-loader-scale: 0.7;
+  }
+
+  &--large {
+    --st-loader-scale: 1.5;
+  }
+}
+
+.st-loader__animation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  zoom: var(--st-loader-scale, 1);
+}
+
+/* =========================================================
+   CLOSE BUTTON
+========================================================= */
+
+.st-loader__content {
+  position: relative;
+}
+
+.st-loader__close {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+
+  width: 28px;
+  height: 28px;
+
+  padding: 0;
+
+  border: 0;
+  border-radius: 50%;
+
+  background: transparent;
+  color: var(--st-loader-text-color, #374151);
+
+  font-size: 20px;
+  line-height: 1;
+
+  cursor: pointer;
+
+  &:hover,
+  &:focus-visible {
+    background: rgba(0, 0, 0, 0.08);
+  }
+}
+
+/* =========================================================
+   CONTENT
+========================================================= */
+
+.st-loader__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  gap: 16px;
+
+  min-width: 80px;
+  min-height: 80px;
+
+  padding: 20px;
+
+  &--container {
+    min-width: 120px;
+    min-height: 120px;
+
+    background: var(--st-loader-container-bg, #fff);
+
+    border-radius: 16px;
+
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  }
+}
+
+/* =========================================================
+   TEXT
+========================================================= */
+
+.st-loader__text {
+  font-size: 14px;
+  font-weight: 500;
+
+  line-height: 1.4;
+
+  color: var(--st-loader-text-color, #374151);
+
+  text-align: center;
+
+  white-space: nowrap;
+}
+
+/* =========================================================
+   01. SPINNER
+========================================================= */
+
+.st-spinner {
+  width: 42px;
+  height: 42px;
+
+  border: 4px solid color-mix(in srgb, var(--st-loader-color) 15%, transparent);
+  border-top-color: var(--st-loader-color);
+
+  border-radius: 50%;
+
+  animation: st-spin 0.8s linear infinite;
+}
+
+@keyframes st-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* =========================================================
+   02. DOTS
+========================================================= */
+
+.st-dots {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+
+  span {
+    width: 10px;
+    height: 10px;
+
+    border-radius: 50%;
+
+    background: var(--st-loader-color);
+
+    animation: st-dot 1.2s infinite ease-in-out;
+
+    &:nth-child(2) {
+      animation-delay: 0.15s;
+    }
+
+    &:nth-child(3) {
+      animation-delay: 0.3s;
+    }
+  }
+}
+
+@keyframes st-dot {
+  0%,
+  80%,
+  100% {
+    transform: scale(0.5);
+    opacity: 0.5;
+  }
+
+  40% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* =========================================================
+   03. BARS
+========================================================= */
+
+.st-bars {
+  display: flex;
+  align-items: center;
+
+  gap: 5px;
+
+  height: 40px;
+
+  span {
+    width: 6px;
+    height: 28px;
+
+    border-radius: 4px;
+
+    background: var(--st-loader-color);
+
+    animation: st-bars 1s infinite ease-in-out;
+
+    &:nth-child(2) {
+      animation-delay: 0.1s;
+    }
+
+    &:nth-child(3) {
+      animation-delay: 0.2s;
+    }
+
+    &:nth-child(4) {
+      animation-delay: 0.3s;
+    }
+  }
+}
+
+@keyframes st-bars {
+  0%,
+  100% {
+    transform: scaleY(0.5);
+  }
+
+  50% {
+    transform: scaleY(1.4);
+  }
+}
+
+/* =========================================================
+   04. PULSE
+========================================================= */
+
+.st-pulse {
+  width: 42px;
+  height: 42px;
+
+  border-radius: 50%;
+
+  background: var(--st-loader-color);
+
+  animation: st-pulse 1.2s infinite ease-in-out;
+}
+
+@keyframes st-pulse {
+  0% {
+    transform: scale(0.7);
+    opacity: 0.5;
+  }
+
+  50% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(0.7);
+    opacity: 0.5;
+  }
+}
+
+/* =========================================================
+   05. RING
+========================================================= */
+
+.st-ring {
+  width: 42px;
+  height: 42px;
+
+  border: 4px solid transparent;
+
+  border-top-color: var(--st-loader-color);
+  border-right-color: var(--st-loader-color);
+
+  border-radius: 50%;
+
+  animation: st-ring 0.8s linear infinite;
+}
+
+@keyframes st-ring {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* =========================================================
+   06. DUAL RING
+========================================================= */
+
+.st-dual-ring {
+  width: 42px;
+  height: 42px;
+
+  border: 4px solid color-mix(in srgb, var(--st-loader-color) 15%, transparent);
+
+  border-top-color: var(--st-loader-color);
+  border-bottom-color: var(--st-loader-color);
+
+  border-radius: 50%;
+
+  animation: st-dual-ring 1s linear infinite;
+}
+
+@keyframes st-dual-ring {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* =========================================================
+   07. RIPPLE
+========================================================= */
+
+.st-ripple {
+  position: relative;
+
+  width: 48px;
+  height: 48px;
+
+  span {
+    position: absolute;
+    inset: 0;
+
+    border: 3px solid var(--st-loader-color);
+
+    border-radius: 50%;
+
+    animation: st-ripple 1.5s infinite ease-out;
+
+    &:nth-child(2) {
+      animation-delay: 0.75s;
+    }
+  }
+}
+
+@keyframes st-ripple {
+  0% {
+    transform: scale(0.2);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+
+/* =========================================================
+   08. ORBIT
+========================================================= */
+
+.st-orbit {
+  position: relative;
+
+  width: 46px;
+  height: 46px;
+
+  border: 2px solid color-mix(in srgb, var(--st-loader-color) 15%, transparent);
+
+  border-radius: 50%;
+
+  animation: st-orbit-rotate 1.2s linear infinite;
+
+  span {
+    position: absolute;
+
+    top: -5px;
+    left: 50%;
+
+    width: 10px;
+    height: 10px;
+
+    margin-left: -5px;
+
+    border-radius: 50%;
+
+    background: var(--st-loader-color);
+  }
+}
+
+@keyframes st-orbit-rotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* =========================================================
+   09. BOUNCE
+========================================================= */
+
+.st-bounce {
+  display: flex;
+  align-items: center;
+
+  gap: 6px;
+
+  span {
+    width: 10px;
+    height: 10px;
+
+    border-radius: 50%;
+
+    background: var(--st-loader-color);
+
+    animation: st-bounce 0.8s infinite alternate;
+
+    &:nth-child(2) {
+      animation-delay: 0.15s;
+    }
+
+    &:nth-child(3) {
+      animation-delay: 0.3s;
+    }
+  }
+}
+
+@keyframes st-bounce {
+  from {
+    transform: translateY(8px);
+  }
+
+  to {
+    transform: translateY(-8px);
+  }
+}
+
+/* =========================================================
+   10. WAVE
+========================================================= */
+
+.st-wave {
+  display: flex;
+  align-items: center;
+
+  gap: 4px;
+
+  height: 40px;
+
+  span {
+    width: 5px;
+    height: 28px;
+
+    border-radius: 3px;
+
+    background: var(--st-loader-color);
+
+    animation: st-wave 1s infinite ease-in-out;
+
+    &:nth-child(2) {
+      animation-delay: 0.1s;
+    }
+
+    &:nth-child(3) {
+      animation-delay: 0.2s;
+    }
+
+    &:nth-child(4) {
+      animation-delay: 0.3s;
+    }
+
+    &:nth-child(5) {
+      animation-delay: 0.4s;
+    }
+  }
+}
+
+@keyframes st-wave {
+  0%,
+  100% {
+    transform: scaleY(0.4);
+  }
+
+  50% {
+    transform: scaleY(1);
+  }
+}
+
+/* =========================================================
+   11. SNAKE
+========================================================= */
+
+.st-snake {
+  display: flex;
+  align-items: center;
+
+  gap: 3px;
+
+  span {
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    background: var(--st-loader-color);
+
+    animation: st-snake 1.2s infinite ease-in-out;
+
+    @for $i from 1 through 6 {
+      &:nth-child(#{$i}) {
+        animation-delay: #{($i - 1) * 0.1}s;
+      }
+    }
+  }
+}
+
+@keyframes st-snake {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.4;
+  }
+
+  50% {
+    transform: translateY(-8px);
+    opacity: 1;
+  }
+}
+
+/* =========================================================
+   12. SQUARE
+========================================================= */
+
+.st-square {
+  width: 34px;
+  height: 34px;
+
+  border: 4px solid var(--st-loader-color);
+
+  border-radius: 5px;
+
+  animation: st-square 1.2s infinite ease-in-out;
+}
+
+@keyframes st-square {
+  0% {
+    transform: rotate(0deg) scale(0.8);
+  }
+
+  50% {
+    transform: rotate(180deg) scale(1);
+  }
+
+  100% {
+    transform: rotate(360deg) scale(0.8);
+  }
+}
+
+/* =========================================================
+   13. CUBE
+========================================================= */
+
+.st-cube {
+  width: 38px;
+  height: 38px;
+
+  perspective: 100px;
+
+  div {
+    width: 100%;
+    height: 100%;
+
+    border: 3px solid var(--st-loader-color);
+
+    animation: st-cube 1.4s infinite ease-in-out;
+  }
+}
+
+@keyframes st-cube {
+  0% {
+    transform: rotateX(0deg) rotateY(0deg);
+  }
+
+  50% {
+    transform: rotateX(180deg) rotateY(0deg);
+  }
+
+  100% {
+    transform: rotateX(180deg) rotateY(180deg);
+  }
+}
+
+/* =========================================================
+   14. DOTS WAVE
+========================================================= */
+
+.st-dots-wave {
+  display: flex;
+  align-items: center;
+
+  gap: 5px;
+
+  span {
+    width: 8px;
+    height: 8px;
+
+    border-radius: 50%;
+
+    background: var(--st-loader-color);
+
+    animation: st-dots-wave 1s infinite ease-in-out;
+
+    &:nth-child(2) {
+      animation-delay: 0.1s;
+    }
+
+    &:nth-child(3) {
+      animation-delay: 0.2s;
+    }
+
+    &:nth-child(4) {
+      animation-delay: 0.3s;
+    }
+
+    &:nth-child(5) {
+      animation-delay: 0.4s;
+    }
+  }
+}
+
+@keyframes st-dots-wave {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* =========================================================
+   15. PROGRESS
+========================================================= */
+
+.st-progress {
+  width: 180px;
+  height: 5px;
+
+  overflow: hidden;
+
+  border-radius: 10px;
+
+  background: color-mix(in srgb, var(--st-loader-color) 15%, transparent);
+
+  span {
+    display: block;
+
+    width: 40%;
+    height: 100%;
+
+    border-radius: inherit;
+
+    background: var(--st-loader-color);
+
+    animation: st-progress 1.2s infinite ease-in-out;
+  }
+}
+
+@keyframes st-progress {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(450%);
+  }
+}
+
+/* =========================================================
+   16. GRADIENT RING
+========================================================= */
+
+.st-gradient-ring {
+  width: 44px;
+  height: 44px;
+
+  border: 5px solid transparent;
+
+  border-radius: 50%;
+
+  background:
+    linear-gradient(#fff, #fff) padding-box,
+    linear-gradient(45deg, var(--st-loader-color), #7c3aed, #06b6d4) border-box;
+
+  animation: st-gradient-ring 1s linear infinite;
+}
+
+@keyframes st-gradient-ring {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* =========================================================
+   17. ELLIPSIS
+========================================================= */
+
+.st-ellipsis {
+  display: flex;
+
+  span {
+    font-size: 30px;
+    font-weight: 700;
+
+    color: var(--st-loader-color);
+
+    animation: st-ellipsis 1.2s infinite;
+
+    &:nth-child(2) {
+      animation-delay: 0.15s;
+    }
+
+    &:nth-child(3) {
+      animation-delay: 0.3s;
+    }
+
+    &::before {
+      content: '•';
+    }
+  }
+}
+
+@keyframes st-ellipsis {
+  0%,
+  80%,
+  100% {
+    opacity: 0.2;
+    transform: translateY(0);
+  }
+
+  40% {
+    opacity: 1;
+    transform: translateY(-4px);
+  }
+}
+
+/* =========================================================
+   18. HEARTBEAT
+========================================================= */
+
+.st-heartbeat {
+  font-size: 38px;
+
+  line-height: 1;
+
+  color: var(--st-loader-color);
+
+  animation: st-heartbeat 1s infinite;
+}
+
+@keyframes st-heartbeat {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  15% {
+    transform: scale(1.2);
+  }
+
+  30% {
+    transform: scale(1);
+  }
+
+  45% {
+    transform: scale(1.15);
+  }
+
+  60% {
+    transform: scale(1);
+  }
+}
+
+/* =========================================================
+   19. STRETCH
+========================================================= */
+
+.st-stretch {
+  display: flex;
+  align-items: center;
+
+  gap: 4px;
+
+  height: 40px;
+
+  span {
+    width: 5px;
+    height: 24px;
+
+    border-radius: 3px;
+
+    background: var(--st-loader-color);
+
+    animation: st-stretch 1s infinite ease-in-out;
+
+    &:nth-child(2) {
+      animation-delay: 0.1s;
+    }
+
+    &:nth-child(3) {
+      animation-delay: 0.2s;
+    }
+
+    &:nth-child(4) {
+      animation-delay: 0.3s;
+    }
+
+    &:nth-child(5) {
+      animation-delay: 0.4s;
+    }
+  }
+}
+
+@keyframes st-stretch {
+  0%,
+  100% {
+    transform: scaleY(0.5);
+  }
+
+  50% {
+    transform: scaleY(1.5);
+  }
+}
+
+/* =========================================================
+   20. SOLAR
+========================================================= */
+
+.st-solar {
+  position: relative;
+
+  width: 46px;
+  height: 46px;
+
+  border: 2px solid color-mix(in srgb, var(--st-loader-color) 15%, transparent);
+
+  border-radius: 50%;
+
+  animation: st-solar 1.5s linear infinite;
+
+  &::before {
+    content: '';
+
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+
+    width: 14px;
+    height: 14px;
+
+    transform: translate(-50%, -50%);
+
+    border-radius: 50%;
+
+    background: var(--st-loader-color);
+  }
+
+  span {
+    position: absolute;
+
+    top: -4px;
+    left: 50%;
+
+    width: 8px;
+    height: 8px;
+
+    transform: translateX(-50%);
+
+    border-radius: 50%;
+
+    background: var(--st-loader-color);
+  }
+}
+
+@keyframes st-solar {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .st-spinner,
+  .st-dots span,
+  .st-bars span,
+  .st-pulse,
+  .st-ring,
+  .st-dual-ring,
+  .st-ripple span,
+  .st-orbit,
+  .st-bounce span,
+  .st-wave span,
+  .st-snake span,
+  .st-square,
+  .st-cube div,
+  .st-dots-wave span,
+  .st-progress span,
+  .st-gradient-ring,
+  .st-ellipsis span,
+  .st-heartbeat,
+  .st-stretch span,
+  .st-solar {
+    animation-duration: 2s;
+  }
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 480px) {
+  .st-loader__content {
+    padding: 16px;
+  }
+
+  .st-loader__text {
+    font-size: 13px;
+  }
+
+  .st-progress {
+    width: 140px;
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "name": "@serotask/angular-loader",
+  "version": "1.0.0",
+  "description": "Modern, lightweight Angular loader: 20 animations, HTTP interceptor, manual control, global config, flicker-free delay/min-duration, accessible and SSR-safe.",
+  "keywords": [
+    "angular",
+    "angular-loader",
+    "loader",
+    "loading",
+    "spinner",
+    "loading-indicator",
+    "http-interceptor",
+    "signals",
+    "serotask"
+  ],
+  "author": "serotask",
+  "license": "MIT",
+  "peerDependencies": {
+    "@angular/common": "^20.0.0 || ^21.0.0 || ^22.0.0 || ^23.0.0",
+    "@angular/core": "^20.0.0 || ^21.0.0 || ^22.0.0 || ^23.0.0",
+    "rxjs": "^7.4.0"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": false
+}

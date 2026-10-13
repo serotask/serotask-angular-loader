@@ -1,0 +1,189 @@
+@if (visible()) {
+<div class="st-loader" role="status" aria-live="polite" aria-busy="true"
+    [attr.aria-label]="options().text || 'Loading'"
+    [class.st-loader--overlay]="options().overlay"
+    [class.st-loader--inline]="!options().fullscreen"
+    [class.st-loader--top]="options().position === 'top'"
+    [class.st-loader--bottom]="options().position === 'bottom'"
+    [class.st-loader--small]="options().size === 'small'"
+    [class.st-loader--large]="options().size === 'large'"
+    [style.--st-loader-color]="options().color"
+    [style.--st-loader-overlay-opacity]="options().overlayOpacity">
+
+    <div class="st-loader__content" [class.st-loader__content--container]="options().showContainer">
+
+        @if (options().showCloseButton) {
+        <button type="button" class="st-loader__close" aria-label="Close loader" (click)="close()">&times;</button>
+        }
+
+        <div class="st-loader__animation" aria-hidden="true">
+        @switch (options().type) {
+
+        <!-- 01. Spinner -->
+        @case ('spinner') {
+        <div class="st-spinner"></div>
+        }
+
+        <!-- 02. Dots -->
+        @case ('dots') {
+        <div class="st-dots">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        }
+
+        <!-- 03. Bars -->
+        @case ('bars') {
+        <div class="st-bars">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        }
+
+        <!-- 04. Pulse -->
+        @case ('pulse') {
+        <div class="st-pulse"></div>
+        }
+
+        <!-- 05. Ring -->
+        @case ('ring') {
+        <div class="st-ring"></div>
+        }
+
+        <!-- 06. Dual Ring -->
+        @case ('dual-ring') {
+        <div class="st-dual-ring"></div>
+        }
+
+        <!-- 07. Ripple -->
+        @case ('ripple') {
+        <div class="st-ripple">
+            <span></span>
+            <span></span>
+        </div>
+        }
+
+        <!-- 08. Orbit -->
+        @case ('orbit') {
+        <div class="st-orbit">
+            <span></span>
+        </div>
+        }
+
+        <!-- 09. Bounce -->
+        @case ('bounce') {
+        <div class="st-bounce">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        }
+
+        <!-- 10. Wave -->
+        @case ('wave') {
+        <div class="st-wave">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        }
+
+        <!-- 11. Snake -->
+        @case ('snake') {
+        <div class="st-snake">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        }
+
+        <!-- 12. Square -->
+        @case ('square') {
+        <div class="st-square"></div>
+        }
+
+        <!-- 13. Cube -->
+        @case ('cube') {
+        <div class="st-cube">
+            <div></div>
+        </div>
+        }
+
+        <!-- 14. Dots Wave -->
+        @case ('dots-wave') {
+        <div class="st-dots-wave">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        }
+
+        <!-- 15. Progress -->
+        @case ('progress') {
+        <div class="st-progress">
+            <span></span>
+        </div>
+        }
+
+        <!-- 16. Gradient Ring -->
+        @case ('gradient-ring') {
+        <div class="st-gradient-ring"></div>
+        }
+
+        <!-- 17. Ellipsis -->
+        @case ('ellipsis') {
+        <div class="st-ellipsis">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        }
+
+        <!-- 18. Heartbeat -->
+        @case ('heartbeat') {
+        <div class="st-heartbeat">
+            ♥
+        </div>
+        }
+
+        <!-- 19. Stretch -->
+        @case ('stretch') {
+        <div class="st-stretch">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        }
+
+        <!-- 20. Solar -->
+        @case ('solar') {
+        <div class="st-solar">
+            <span></span>
+        </div>
+        }
+
+        }
+        </div>
+
+        @if (options().text) {
+        <div class="st-loader__text">
+            {{ options().text }}
+        </div>
+        }
+
+    </div>
+
+</div>
+}
